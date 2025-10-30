@@ -21,6 +21,10 @@ const Title = styled.h1`
   font-size: 2.5rem;
   margin: 0;
   font-weight: 700;
+
+  @media (max-width: 375px) {
+    font-size: 2rem;
+  }
 `;
 
 const TranslatorButton = styled.button`
