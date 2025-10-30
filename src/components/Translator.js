@@ -67,6 +67,12 @@ const inputStyles = css`
   background-color: #f7f7f7;
   transition: border-color 0.2s ease;
   color: #111;
+  font-weight: 700; /* Explicitly set font-weight */
+
+  &::placeholder {
+    font-weight: 900; /* Match the input's font-weight */
+    color: #999; /* A standard placeholder color */
+  }
 
   &:focus {
     outline: none;
@@ -121,7 +127,7 @@ const ActionButton = styled.button`
     background-color: #111;
     color: white;
     cursor: pointer;
-    font-weight: 600;
+    font-weight: 700;
     transition: background-color 0.2s ease;
 
     &:hover:not(:disabled) {
@@ -146,7 +152,7 @@ const ToggleButton = styled.button`
     border: 1px solid #ccc;
     border-radius: 8px;
     cursor: pointer;
-    font-weight: 600;
+    font-weight: 750;
     background-color: #fff;
     color: #555;
     transition: all 0.2s ease;

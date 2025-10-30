@@ -6,7 +6,7 @@ import Translator from './components/Translator';
 
 const AppContainer = styled.div`
   max-width: 800px;
-  margin: 40px auto;
+  margin: 25px auto;
   padding: 0 10px;
 `;
 
