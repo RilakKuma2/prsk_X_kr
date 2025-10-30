@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "주회글 작성기",
+  "name": "프세카 주회글 작성기",
   "icons": [
     {
       "src": "favicon.ico",
