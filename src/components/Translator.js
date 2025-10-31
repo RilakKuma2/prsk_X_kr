@@ -153,6 +153,7 @@ const ToggleButton = styled.button`
     border-radius: 8px;
     cursor: pointer;
     font-weight: 750;
+    font-size: 0.875rem;
     background-color: #fff;
     color: #555;
     transition: all 0.2s ease;
@@ -167,7 +168,7 @@ const ToggleButton = styled.button`
 const CheckboxLabel = styled.label`
   display: flex;
   align-items: center;
-  font-size: 0.9rem;
+  font-size: .9rem;
   margin-bottom: 10px;
   color: #555;
 
