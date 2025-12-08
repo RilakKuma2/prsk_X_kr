@@ -2,7 +2,7 @@
   "name": "prsk-x-post-react",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://RilakKuma2.github.io/prsk_X_kr",
+  "homepage": ".",
   "dependencies": {
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
