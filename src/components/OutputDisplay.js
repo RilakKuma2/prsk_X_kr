@@ -9,6 +9,75 @@ const OutputContainer = styled.div`
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 `;
 
+const ControlsGroup = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  gap: 16px;
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+    gap: 8px;
+  }
+`;
+
+const ControlSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+`;
+
+const ControlLabel = styled.span`
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #555;
+  margin-bottom: 4px;
+`;
+
+const ButtonGroup = styled.div`
+  display: flex;
+  gap: 4px;
+`;
+
+const OptionButton = styled.button`
+  cursor: pointer;
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  transition: all 0.2s ease;
+  background-color: #fff;
+  color: #555;
+  flex: 1;
+  text-align: center;
+
+  &.selected {
+    background-color: #111;
+    color: white;
+    border-color: #111;
+  }
+`;
+
+const CheckboxContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15px;
+  font-size: 0.9rem;
+  color: #555;
+  font-weight: 600;
+  cursor: pointer;
+
+  input {
+    margin-right: 8px;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    accent-color: #111;
+  }
+`;
+
 const TextArea = styled.textarea`
   width: 100%;
   min-height: 150px;
@@ -94,21 +163,68 @@ const TweetButton = styled.a`
   }
 `;
 
-function OutputDisplay({ tweetText }) {
+function OutputDisplay({ tweetText, presetType, setPresetType, playerSlots, setPlayerSlots }) {
   const [editableText, setEditableText] = useState(tweetText);
+  const [autoRotate, setAutoRotate] = useState(() => {
+    const saved = localStorage.getItem('autoRotatePreset');
+    return saved === 'true'; // Default is false, checked explicitly against 'true'
+  });
 
   useEffect(() => {
     setEditableText(tweetText);
   }, [tweetText]);
 
+  const handleAutoRotateChange = (e) => {
+    const isChecked = e.target.checked;
+    setAutoRotate(isChecked);
+    localStorage.setItem('autoRotatePreset', isChecked);
+  };
+
   const charCount = editableText.length;
+
+  const rotatePreset = () => {
+    if (autoRotate) {
+      setPresetType(prev => (prev % 4) + 1);
+    }
+  };
 
   const handleCopy = () => {
     navigator.clipboard.writeText(editableText);
+    rotatePreset();
   };
 
   return (
     <OutputContainer>
+      <ControlsGroup>
+        <ControlSection>
+          <ControlLabel>레이아웃</ControlLabel>
+          <ButtonGroup>
+            {[1, 2, 3, 4].map(num => (
+              <OptionButton
+                key={num}
+                className={presetType === num ? 'selected' : ''}
+                onClick={() => setPresetType(num)}
+              >
+                {num}
+              </OptionButton>
+            ))}
+          </ButtonGroup>
+        </ControlSection>
+        <ControlSection>
+          <ControlLabel>@ 모집 인원</ControlLabel>
+          <ButtonGroup>
+            {[1, 2, 3, 4].map(num => (
+              <OptionButton
+                key={num}
+                className={playerSlots === num ? 'selected' : ''}
+                onClick={() => setPlayerSlots(num)}
+              >
+                {num}
+              </OptionButton>
+            ))}
+          </ButtonGroup>
+        </ControlSection>
+      </ControlsGroup>
       <TextArea
         value={editableText}
         onChange={(e) => setEditableText(e.target.value)}
@@ -122,10 +238,19 @@ function OutputDisplay({ tweetText }) {
           href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(editableText)}`}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={rotatePreset}
         >
           𝕏에 게시하기
         </TweetButton>
       </ButtonContainer>
+      <CheckboxContainer as="label">
+        <input
+          type="checkbox"
+          checked={autoRotate}
+          onChange={handleAutoRotateChange}
+        />
+        복사 및 게시 시마다 레이아웃 변경 (서치밴 방지)
+      </CheckboxContainer>
     </OutputContainer>
   );
 }

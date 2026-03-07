@@ -59,15 +59,28 @@ const TranslatorButton = styled.button`
 function App() {
   const [tweetText, setTweetText] = useState('');
   const [isTranslatorOpen, setIsTranslatorOpen] = useState(false);
+  const [presetType, setPresetType] = useState(1);
+  const [playerSlots, setPlayerSlots] = useState(null);
 
   return (
     <AppContainer>
-        <Header>
-            <Title>프세카 주회글 작성기</Title>
-            <TranslatorButton onClick={() => setIsTranslatorOpen(true)}>번역기</TranslatorButton>
-        </Header>
-      <PostGenerator setTweetText={setTweetText} />
-      <OutputDisplay tweetText={tweetText} />
+      <Header>
+        <Title>프세카 주회글 작성기</Title>
+        <TranslatorButton onClick={() => setIsTranslatorOpen(true)}>번역기</TranslatorButton>
+      </Header>
+      <PostGenerator
+        setTweetText={setTweetText}
+        presetType={presetType}
+        playerSlots={playerSlots}
+        setPlayerSlots={setPlayerSlots}
+      />
+      <OutputDisplay
+        tweetText={tweetText}
+        presetType={presetType}
+        setPresetType={setPresetType}
+        playerSlots={playerSlots}
+        setPlayerSlots={setPlayerSlots}
+      />
       {isTranslatorOpen && <Translator setIsOpen={setIsTranslatorOpen} />}
     </AppContainer>
   );
